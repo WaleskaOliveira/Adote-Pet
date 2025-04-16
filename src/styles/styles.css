@@ -1,0 +1,247 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+.header-image {
+  width: 100%;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Evita que a imagem passe dos limites */
+  border-radius: 12px;
+}
+
+.header-banner {
+  width: 100%; /* Ocupa toda a largura disponível */
+  max-height: 460px; /* Limita a altura da imagem */
+  object-fit: cover; /* Corta a imagem proporcionalmente se necessário */
+  border-radius: 12px;
+}
+
+
+/* Container principal */
+.container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Botões superiores */
+.top-buttons {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+/* Botão laranja */
+.button-orange {
+  background-color: #FF8C00;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.button-orange:hover {
+  background-color: #e67600;
+}
+
+/* Títulos e parágrafos */
+h1 {
+  margin-top: 80px;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #333;
+}
+
+p {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #555;
+}
+
+/* Layout principal */
+.content {
+  display: flex;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+/* Filtros */
+.filters {
+  width: 250px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 100px;
+  height: fit-content;
+}
+
+.filters h2 {
+  margin-bottom: 15px;
+  font-size: 18px;
+  color: #444;
+}
+
+.filters label {
+  display: block;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.filters select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Cards de pets */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  flex: 1;
+}
+
+.card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.card h3 {
+  margin: 10px 0 5px;
+  font-size: 20px;
+  color: #333;
+}
+
+.card p {
+  margin-bottom: 10px;
+  color: #555;
+  font-size: 14px;
+}
+
+/* Modal genérico */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content h2 {
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.modal-content button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #FF8C00;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal-content button:hover {
+  background-color: #e67600;
+}
+
+/* Botão de fechar modal */
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  color: #333;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Ajuste para mobile */
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column;
+  }
+
+  .filters {
+    width: 100%;
+    margin-bottom: 20px;
+    position: static;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .top-buttons {
+    flex-direction: column;
+    gap: 5px;
+    top: 10px;
+    right: 10px;
+  }
+
+  h1 {
+    margin-top: 120px;
+  }
+}
