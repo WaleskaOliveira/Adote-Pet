@@ -1,4 +1,4 @@
-// 📄 src/pages/Home.jsx
+
 import { useState } from 'react';
 import '../styles/home.css'; // Criaremos este CSS
 import Modals from '../components/Modals';
