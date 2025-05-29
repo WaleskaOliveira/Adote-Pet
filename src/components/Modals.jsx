@@ -1,45 +1,96 @@
-
 import { useState } from 'react';
 import '../styles/styles.css';
+import axios from 'axios';
 
 export default function Modals({ type, closeModal, setIsLoggedIn }) {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [nome, setNome] = useState('');
   const [telefone, setTelefone] = useState('');
+  const [mensagemErro, setMensagemErro] = useState('');
 
-  // Função para simular login
-  const handleLogin = () => {
-    console.log('Login realizado com sucesso!');
-    // Aqui você pode adicionar a lógica real de login (ex.: chamada API)
-    closeModal(); // Fecha o modal
-    setIsLoggedIn(); // Faz o redirecionamento via Home.jsx
+  const limparCampos = () => {
+    setEmail('');
+    setSenha('');
+    setNome('');
+    setTelefone('');
+    setMensagemErro('');
   };
 
-  // Função para simular cadastro
-  const handleCadastro = () => {
-    console.log('Usuário cadastrado com sucesso!');
-    // Aqui você pode adicionar a lógica real de cadastro (ex.: chamada API)
-    closeModal(); // Fecha o modal
-    setIsLoggedIn(); // Faz o redirecionamento via Home.jsx
+  const handleLogin = async () => {
+    if (!email || !senha) {
+      setMensagemErro('Por favor, preencha todos os campos.');
+      return;
+    }
+
+    try {
+      const response = await axios.post('http://localhost:3001/usuarios/login', {
+        emailOuTelefone: email,
+        senha
+      });
+
+      closeModal();
+      setIsLoggedIn();
+      limparCampos();
+    } catch (error) {
+      if (error.response) {
+        if (error.response.status === 404) {
+          setMensagemErro('Usuário não cadastrado. Realize o cadastro.');
+        } else if (error.response.status === 401) {
+          setMensagemErro('Senha incorreta. Tente novamente.');
+        } else {
+          setMensagemErro('Erro no login. Tente novamente mais tarde.');
+        }
+      } else {
+        setMensagemErro('Erro de conexão com o servidor.');
+      }
+    }
+  };
+
+  const handleCadastro = async () => {
+    if (!nome || !telefone || !email || !senha) {
+      setMensagemErro('Todos os campos são obrigatórios.');
+      return;
+    }
+
+    try {
+      await axios.post('http://localhost:3001/usuarios', {
+        nome,
+        telefone,
+        email,
+        senha
+      });
+
+      closeModal();
+      setIsLoggedIn();
+      limparCampos();
+    } catch (error) {
+      setMensagemErro('Erro ao cadastrar usuário. Tente novamente.');
+    }
   };
 
   return (
     <div className="modal">
       <div className="modal-content">
-        <span className="close" onClick={closeModal}>
+        <span className="close" onClick={() => { closeModal(); limparCampos(); }}>
           &times;
         </span>
+
+        {mensagemErro && (
+          <div className="mensagem-erro">
+            {mensagemErro}
+          </div>
+        )}
 
         {type === 'login' && (
           <>
             <h2>Login</h2>
-            <label>Email:</label>
+            <label>Email ou Telefone:</label>
             <input
-              type="email"
+              type="text"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Digite seu email"
+              placeholder="Digite seu email ou telefone"
             />
             <label>Senha:</label>
             <input
@@ -94,4 +145,7 @@ export default function Modals({ type, closeModal, setIsLoggedIn }) {
     </div>
   );
 }
+
+
+
 

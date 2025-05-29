@@ -334,3 +334,14 @@ p {
   margin-bottom: 20px;
 }
 
+.mensagem-erro {
+  background-color: #ffe0e0;
+  color: #d8000c;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #d8000c;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: bold;
+}
+
