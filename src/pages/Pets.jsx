@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; // 👈 Importa o hook de navegação
+import { useNavigate } from "react-router-dom";
 import FiltroPets from "../components/FiltroPets";
 import { getTodosPets } from "../services/api";
 import ModalResponsavel from "../components/ModalResponsavel";
 import ModalCadastroAnimal from "../components/ModalCadastroAnimal";
+import ModalDetalhesPet from "../components/ModalDetalhesPet";
 
 export default function Pets() {
   const [pets, setPets] = useState([]);
@@ -17,7 +18,10 @@ export default function Pets() {
   const [responsavel, setResponsavel] = useState(null);
   const [modalAberto, setModalAberto] = useState(false);
   const [modalCadastroAberto, setModalCadastroAberto] = useState(false);
-  const navigate = useNavigate(); // 👈 Hook de navegação
+  const [modalDetalhesAberto, setModalDetalhesAberto] = useState(false);
+  const [detalhesSelecionado, setDetalhesSelecionado] = useState("");
+
+  const navigate = useNavigate();
 
   const carregarPets = async () => {
     try {
@@ -35,7 +39,6 @@ export default function Pets() {
   const filtrarPets = () => {
     return pets.filter((pet) => {
       const { estado, cidade, especie, genero, idade } = filtros;
-
       return (
         (!estado || pet.estado === estado) &&
         (!cidade || pet.cidade === cidade) &&
@@ -54,33 +57,33 @@ export default function Pets() {
     setModalAberto(true);
   };
 
+  const abrirModalDetalhes = (detalhes) => {
+    setDetalhesSelecionado(detalhes);
+    setModalDetalhesAberto(true);
+  };
+
   const fecharModal = () => {
     setModalAberto(false);
     setResponsavel(null);
   };
 
   const sairParaHome = () => {
-    navigate("/"); // 👈 Redireciona para a rota da Home
+    navigate("/");
   };
 
   return (
-    <div className="container">
-      <h1>Pets disponíveis para adoção</h1>
-      <p>Filtre e escolha seu novo amigo!</p>
+    <div
+      className="container"
+      style={{ minHeight: "100vh", padding: "16px" }}
+    >
+      <h1>Pets disponíveis para adoção 🐾</h1>
+      <h3>Filtre e encontre seu novo melhor amigo!</h3>
 
-      {/* Botões Sair e Cadastrar */}
       <div className="botoes-superiores">
-        <button
-          className="button-orange"
-          onClick={sairParaHome}
-        >
+        <button className="button-orange" onClick={sairParaHome}>
           Sair
         </button>
-    
-        <button
-          className="button-orange"
-          onClick={() => setModalCadastroAberto(true)}
-        >
+        <button className="button-orange" onClick={() => setModalCadastroAberto(true)}>
           Cadastrar Novo Animal
         </button>
       </div>
@@ -105,11 +108,13 @@ export default function Pets() {
               <p>Gênero: {pet.genero}</p>
               <p>Idade: {pet.idade}</p>
               <p>{pet.cidade}, {pet.estado}</p>
-              <button
-                className="button-orange"
-                onClick={() => abrirModalResponsavel(pet)}
-              >
+
+              <button className="button-orange" onClick={() => abrirModalResponsavel(pet)}>
                 Quero Adotar
+              </button>
+
+              <button className="button-secondary" onClick={() => abrirModalDetalhes(pet.detalhes)}>
+                Mais Detalhes
               </button>
             </div>
           ))}
@@ -126,7 +131,16 @@ export default function Pets() {
           atualizarLista={carregarPets}
         />
       )}
+
+      {modalDetalhesAberto && (
+        <ModalDetalhesPet
+          detalhes={detalhesSelecionado}
+          onClose={() => setModalDetalhesAberto(false)}
+        />
+      )}
     </div>
   );
 }
+
+
 

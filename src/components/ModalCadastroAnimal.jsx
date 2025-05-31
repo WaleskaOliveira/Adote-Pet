@@ -10,6 +10,7 @@ export default function ModalCadastroAnimal({ closeModal, atualizarLista }) {
     cidade: "",
     nomeResponsavel: "",
     telefoneResponsavel: "",
+    detalhes: "", // campo de detalhes
   });
   const [imagem, setImagem] = useState(null);
   const [estados, setEstados] = useState([]);
@@ -65,6 +66,7 @@ export default function ModalCadastroAnimal({ closeModal, atualizarLista }) {
       form.append("idade", formData.idade);
       form.append("estado", formData.estado);
       form.append("cidade", formData.cidade);
+      form.append("detalhes", formData.detalhes); // incluído
       form.append("id_responsavel", id_responsavel);
       form.append("imagem", imagem);
 
@@ -157,6 +159,15 @@ export default function ModalCadastroAnimal({ closeModal, atualizarLista }) {
             ))}
           </select>
 
+          <textarea
+          name="detalhes"
+          placeholder="Detalhes sobre o pet (opcional)"
+          value={formData.detalhes}
+          onChange={handleChange}
+          className="input" // garante que tenha o mesmo estilo dos inputs
+          rows={4}
+        />
+
           <input
             name="nomeResponsavel"
             placeholder="Nome do Responsável"
@@ -167,9 +178,12 @@ export default function ModalCadastroAnimal({ closeModal, atualizarLista }) {
 
           <input
             name="telefoneResponsavel"
-            placeholder="Telefone(xx)xxxx-xxxx"
+            placeholder="Telefone (somente números)"
             value={formData.telefoneResponsavel}
             onChange={handleChange}
+            inputMode="numeric"
+            pattern="\d*"
+            maxLength={11}
             required
           />
 
@@ -186,4 +200,3 @@ export default function ModalCadastroAnimal({ closeModal, atualizarLista }) {
     </div>
   );
 }
-
