@@ -3,13 +3,11 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 
-// Cria a pasta de uploads se não existir
 const uploadDir = './uploads';
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir);
 }
 
-// Configuração do multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, uploadDir);
@@ -23,7 +21,6 @@ const storage = multer.diskStorage({
 
 export const upload = multer({ storage });
 
-// Criar um novo pet (com cadastro de responsável)
 export const createPet = (req, res) => {
   const {
     nome,
@@ -32,17 +29,18 @@ export const createPet = (req, res) => {
     idade,
     estado,
     cidade,
-    id_responsavel // <-- agora vem pronto
+    id_responsavel,
+    detalhes
   } = req.body;
 
   const imagem = req.file ? req.file.filename : null;
 
   const insertPet = `
-    INSERT INTO pets (nome, especie, genero, idade, estado, cidade, imagem, id_responsavel)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO pets (nome, especie, genero, idade, estado, cidade, detalhes, imagem, id_responsavel)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
-  const values = [nome, especie, genero, idade, estado, cidade, imagem, id_responsavel];
+  const values = [nome, especie, genero, idade, estado, cidade, detalhes, imagem, id_responsavel];
 
   connection.query(insertPet, values, (err, results) => {
     if (err) {
@@ -53,7 +51,6 @@ export const createPet = (req, res) => {
   });
 };
 
-// Obter todos os pets com dados do responsável
 export const getPets = (req, res) => {
   const sql = `
     SELECT 
@@ -73,7 +70,6 @@ export const getPets = (req, res) => {
   });
 };
 
-// Atualizar um pet
 export const updatePet = (req, res) => {
   const { id } = req.params;
   const {
@@ -84,16 +80,17 @@ export const updatePet = (req, res) => {
     estado,
     cidade,
     imagem,
-    id_responsavel
+    id_responsavel,
+    detalhes
   } = req.body;
 
   const sql = `
     UPDATE pets
-    SET nome = ?, especie = ?, genero = ?, idade = ?, estado = ?, cidade = ?, imagem = ?, id_responsavel = ?
+    SET nome = ?, especie = ?, genero = ?, idade = ?, estado = ?, cidade = ?, imagem = ?, id_responsavel = ?, detalhes = ?
     WHERE id = ?
   `;
 
-  const values = [nome, especie, genero, idade, estado, cidade, imagem, id_responsavel, id];
+  const values = [nome, especie, genero, idade, estado, cidade, imagem, id_responsavel, detalhes, id];
 
   connection.query(sql, values, (err, result) => {
     if (err) {
@@ -104,7 +101,6 @@ export const updatePet = (req, res) => {
   });
 };
 
-// Deletar um pet
 export const deletePet = (req, res) => {
   const { id } = req.params;
   const sql = 'DELETE FROM pets WHERE id = ?';
@@ -117,3 +113,4 @@ export const deletePet = (req, res) => {
     res.json({ mensagem: 'Pet deletado com sucesso!' });
   });
 };
+
