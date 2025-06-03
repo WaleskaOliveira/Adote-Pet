@@ -45,5 +45,6 @@ Testes automatizados são implementados utilizando **Cypress**, permitindo valid
 As principais tabelas utilizadas no projeto são:
 
 - `pets`: informações do animal
-- `responsaveis`: dados do responsável
+- `responsaveis`: dados do responsável pelo animals
+- `usuarios`: dados do usuário do site
 - `imagens`: imagens dos animais (armazenadas via multer)
