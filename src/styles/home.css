@@ -51,12 +51,12 @@ html, body {
   font-size: 4rem;
   margin-bottom: 30px;
   color: white;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7); /* Ajuste aqui */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7); 
 }
 
 
 .overlay h3 {
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); /* Nova sombra para legibilidade */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); 
 }
 
 .buttons {

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:3001', // Ajuste a URL conforme seu backend
+  baseURL: 'http://localhost:3001', 
 });
 
 export const getTodosPets = async () => {

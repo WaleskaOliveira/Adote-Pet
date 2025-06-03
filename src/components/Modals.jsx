@@ -52,7 +52,18 @@ export default function Modals({ type, closeModal, setIsLoggedIn }) {
       setMensagemErro('Todos os campos são obrigatórios.');
       return;
     }
-
+  
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setMensagemErro('Email inválido.');
+      return;
+    }
+  
+    if (senha.length < 6) {
+      setMensagemErro('A senha precisa ter no mínimo 6 caracteres.');
+      return;
+    }
+  
     try {
       await axios.post('http://localhost:3001/usuarios', {
         nome,
@@ -60,7 +71,7 @@ export default function Modals({ type, closeModal, setIsLoggedIn }) {
         email,
         senha
       });
-
+  
       closeModal();
       setIsLoggedIn();
       limparCampos();
@@ -68,7 +79,7 @@ export default function Modals({ type, closeModal, setIsLoggedIn }) {
       setMensagemErro('Erro ao cadastrar usuário. Tente novamente.');
     }
   };
-
+  
   return (
     <div className="modal">
       <div className="modal-content">

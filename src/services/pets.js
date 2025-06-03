@@ -1,4 +1,4 @@
-// Dentro do componente Pets
+
 const carregarPets = () => {
     fetch("http://localhost:3001/pets")
       .then((res) => res.json())
@@ -19,7 +19,7 @@ const carregarPets = () => {
       .catch((err) => console.error("Erro ao buscar pets:", err));
   };
   
-  // Use useEffect para carregar inicialmente
+  
   useEffect(() => {
     carregarPets();
   }, []);

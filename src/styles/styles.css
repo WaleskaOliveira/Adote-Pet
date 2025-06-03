@@ -1,4 +1,4 @@
-/* Reset básico */
+
 .container {
   width: 100vw;
   height: 100vh;
@@ -346,6 +346,15 @@ p {
   text-align: center;
   font-weight: bold;
 }
+
+.mensagemdeerro {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+  font-weight: bold;
+  text-align: center;
+}
+
 
 .button-secondary {
   background-color: #eee;
